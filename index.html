@@ -4,514 +4,301 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tarun Tej Gajibimkar - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* --- Core Variables & Reset --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --accent: #00d4ff;
-            --dark: #0a0e27;
-            --darker: #050810;
-            --light: #e2e8ff;
-            --glass: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --primary: #667eea; --secondary: #764ba2; --accent: #00d4ff; /* Cyan Accent */
+            --dark: #0a0e27; --darker: #050810; --light: #e2e8ff;
+            --glass: rgba(255, 255, 255, 0.05); --glass-border: rgba(255, 255, 255, 0.1);
+            --nav-height: 90px;
         }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
-            color: var(--light);
-            overflow-x: hidden;
-            line-height: 1.6;
+            color: var(--light); overflow-x: hidden; line-height: 1.6;
         }
+        
+        /* Background Canvas */
+        #canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.4; pointer-events: none; }
+        .container { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 20px; }
 
-        #canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            opacity: 0.4;
-        }
-
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
+        /* --- Smart Navigation & Mobile Menu --- */
         nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(10, 14, 39, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 20px 0;
-            z-index: 1000;
-            border-bottom: 1px solid var(--glass-border);
+            position: fixed; top: 0; left: 0; right: 0; height: var(--nav-height);
+            background: rgba(10, 14, 39, 0.95); backdrop-filter: blur(12px); z-index: 1000;
+            border-bottom: 1px solid var(--glass-border); display: flex; align-items: center;
+            transition: transform 0.3s ease-in-out;
+        }
+        nav.nav-hidden { transform: translateY(-100%); }
+
+        nav .container { width: 100%; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 32px; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 2px; }
+        
+        nav ul { display: flex; gap: 25px; list-style: none; }
+        nav a { color: var(--light); text-decoration: none; transition: all 0.3s; position: relative; font-size: 15px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+        nav a:hover { color: var(--accent); }
+
+        /* Hamburger Menu Icon */
+        .menu-toggle { display: none; font-size: 28px; color: var(--light); cursor: pointer; }
+
+        /* --- General Section Styling --- */
+        section { padding: 110px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; }
+        .section-title { text-align: center; font-size: 42px; margin-bottom: 70px; background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
+        
+        /* Default Glass Card */
+        .glass-card { background: var(--glass); backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 30px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); transition: all 0.3s; height: 100%; }
+        .glass-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+
+        /* --- Hero Section --- */
+        #hero { padding-top: calc(var(--nav-height) + 50px); text-align: center; }
+        .profile-image { width: 240px; height: 240px; border-radius: 50%; overflow: hidden; border: 4px solid var(--primary); box-shadow: 0 0 50px rgba(102, 126, 234, 0.5); animation: fadeInUp 1s; margin: 0 auto 25px; }
+        .profile-image img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .hero-content .hello { font-size: 20px; color: var(--accent); font-weight: 500; display: block; animation: fadeInUp 1s 0.1s backwards; }
+        .hero-content h1 { font-size: 58px; line-height: 1.2; margin-bottom: 10px; background: linear-gradient(135deg, #fff, var(--light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: fadeInUp 1s 0.2s backwards; font-weight: 800; }
+        .hero-content .tagline { font-size: 22px; color: var(--accent); margin-bottom: 25px; animation: fadeInUp 1s 0.4s backwards; font-weight: 600; }
+        .hero-content p { font-size: 17px; max-width: 800px; margin: 0 auto 35px; animation: fadeInUp 1s 0.6s backwards; line-height: 1.8; opacity: 0.9; }
+        
+        .cta-buttons { display: flex; flex-direction: column; align-items: center; gap: 20px; animation: fadeInUp 1s 0.8s backwards; }
+        .cta-secondary { display: flex; gap: 15px; }
+        .btn { padding: 12px 35px; border-radius: 50px; text-decoration: none; font-weight: 700; transition: all 0.3s; font-size: 16px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: 2px solid transparent; cursor: pointer; }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6); }
+        .btn-outline { border: 2px solid var(--primary); background: transparent; color: var(--light); }
+        .btn-outline:hover { background: var(--primary); color: white; transform: translateY(-3px); }
+
+        .hero-socials { display: flex; gap: 20px; margin-top: 35px; animation: fadeInUp 1s 1s backwards; justify-content: center; }
+        .hero-socials a { width: 50px; height: 50px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--light); font-size: 22px; transition: 0.3s; }
+        .hero-socials a:hover { background: var(--primary); transform: scale(1.15); color: white; box-shadow: 0 0 20px var(--primary); }
+
+        /* --- Skills Galaxy (Compact 2-Col Grid) --- */
+        .skills-galaxy { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; /* Strict 2 columns */
+            gap: 20px; width: 100%; 
+        }
+        /* Specific compact style for skills cards */
+        .skills-galaxy .glass-card { padding: 20px; min-height: auto; }
+        
+        .skill-category { display: flex; flex-direction: column; gap: 10px; }
+        .skill-category h3 { 
+            color: var(--accent); font-size: 1.1rem; display: flex; align-items: center; 
+            gap: 10px; border-bottom: 1px solid var(--glass-border); padding-bottom: 8px; margin-bottom: 0;
+        }
+        .skill-category h3 i { font-size: 1.3rem; }
+        .skill-items { display: flex; flex-wrap: wrap; gap: 8px; }
+        .skill-tag { 
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(0, 212, 255, 0.1)); 
+            padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(102, 126, 234, 0.3); 
+            font-size: 0.85rem; font-weight: 500; 
         }
 
-        nav .container {
+        /* --- Timeline Styling --- */
+        .timeline-section { position: relative; width: 100%; max-width: 900px; padding-left: 40px; }
+        .timeline-section::before {
+            content: ''; position: absolute; left: 10px; top: 0; height: 100%;
+            width: 3px; background: var(--accent); box-shadow: 0 0 10px var(--accent); border-radius: 3px;
+        }
+        .timeline-item { position: relative; margin-bottom: 60px; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -37px; top: 0px;
+            width: 17px; height: 17px; border-radius: 50%;
+            background: var(--darker); border: 3px solid var(--accent);
+            box-shadow: 0 0 15px var(--accent), inset 0 0 10px var(--accent); z-index: 2;
+        }
+        
+        .experience-card h3, .education-card h3 { color: var(--accent); margin-bottom: 5px; font-size: 24px; }
+        .education-card .minor-degree { color: var(--accent); font-weight: 700; font-size: 18px; display: block; margin-top: 5px; margin-bottom: 15px; }
+        .experience-card .company, .education-card .company { color: var(--light); font-weight: 700; margin-bottom: 5px; display: block; font-size: 18px; }
+        .experience-card .date, .education-card .date { font-size: 14px; color: #aaa; margin-bottom: 15px; display: block; font-weight: 500; letter-spacing: 1px; }
+        .experience-card ul, .education-card ul { padding-left: 20px; }
+        .experience-card li, .education-card li { margin-bottom: 10px; opacity: 0.9; font-size: 15px; position: relative; list-style: none; }
+        .experience-card li::before, .education-card li::before { content: '▹'; position: absolute; left: -25px; color: var(--accent); font-size: 18px; }
+
+        /* --- Projects (Strict 2 Columns & Header for Link) --- */
+        .filter-buttons { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; flex-wrap: wrap; }
+        .filter-btn { padding: 10px 30px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 30px; color: var(--light); cursor: pointer; transition: all 0.3s; font-weight: 600; }
+        .filter-btn:hover, .filter-btn.active { background: linear-gradient(135deg, var(--primary), var(--secondary)); border-color: transparent; }
+        
+        .projects-grid { 
+            display: grid; 
+            /* STRICTLY 2 COLUMNS (1fr 1fr) for Desktop */
+            grid-template-columns: 1fr 1fr; 
+            gap: 30px; width: 100%; 
+        }
+        .project-card { display: flex; flex-direction: column; height: 100%; }
+        
+        /* New Header for Title + Link */
+        .project-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        nav ul {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-
-        nav a {
-            color: var(--light);
-            text-decoration: none;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        nav a:hover {
-            color: var(--accent);
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.3s;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        section {
-            padding: 80px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #hero {
-            min-height: 100vh;
-        }
-
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s;
-        }
-
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.2);
-            border-color: var(--primary);
-        }
-
-        #hero {
-            text-align: center;
-        }
-
-        .hero-content h1 {
-            font-size: 64px;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 1s;
-        }
-
-        .hero-content .tagline {
-            font-size: 24px;
-            color: var(--accent);
-            margin-bottom: 30px;
-            animation: fadeInUp 1s 0.2s backwards;
-        }
-
-        .hero-content p {
-            font-size: 18px;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            animation: fadeInUp 1s 0.4s backwards;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            animation: fadeInUp 1s 0.6s backwards;
-        }
-
-        .btn {
-            padding: 15px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-secondary {
-            color: var(--light);
-            border-color: var(--primary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary);
-            transform: scale(1.05);
-        }
-
-        .skills-galaxy {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .skill-category {
-            position: relative;
-        }
-
-        .skill-category h3 {
-            color: var(--accent);
-            margin-bottom: 20px;
-            font-size: 20px;
-        }
-
-        .skill-items {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .skill-tag {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(0, 212, 255, 0.2));
-            padding: 10px 20px;
-            border-radius: 25px;
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .skill-tag:hover {
-            transform: translateY(-3px);
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.4), rgba(0, 212, 255, 0.4));
-            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 48px;
-            margin-bottom: 60px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .project-card {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-card h3 {
-            color: var(--accent);
+            align-items: flex-start;
             margin-bottom: 15px;
-            font-size: 22px;
+        }
+        .project-header h3 { 
+            color: var(--accent); 
+            font-size: 22px; 
+            margin: 0;
+            padding-right: 15px;
+        }
+        .live-link {
+            color: var(--accent);
+            font-size: 1.2rem;
+            transition: 0.3s;
+            flex-shrink: 0;
+        }
+        .live-link:hover {
+            color: var(--primary);
+            transform: scale(1.1);
         }
 
-        .project-card p {
-            margin-bottom: 20px;
-            color: var(--light);
-            opacity: 0.9;
-        }
-
+        .project-card p { opacity: 0.9; margin-bottom: 15px; flex-grow: 1; }
+        
+        /* Pill-Style Skill Tags (Flexbox Layout) */
         .tech-stack {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 15px;
+            gap: 8px; /* Spacing between pills */
+            margin-top: auto;
+        }
+        .tech-badge { 
+            background: rgba(0, 212, 255, 0.1); 
+            padding: 6px 14px; 
+            border-radius: 50px; /* Fully rounded pill */
+            font-size: 12px; 
+            border: 1px solid rgba(0, 212, 255, 0.3); 
+            color: var(--accent); 
+            font-weight: 500;
+            white-space: nowrap; 
         }
 
-        .tech-badge {
-            background: rgba(0, 212, 255, 0.2);
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            border: 1px solid var(--accent);
+        /* --- Certifications --- */
+        .cert-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; width: 100%; }
+        .cert-card { display: flex; align-items: flex-start; gap: 20px; }
+        .card-icon { font-size: 40px; color: var(--accent); flex-shrink: 0; margin-top: 5px; }
+        .card-content h3 { font-size: 20px; margin-bottom: 5px; color: var(--light); }
+        .card-content .issuer { color: var(--accent); font-size: 14px; display: block; font-weight: 600; }
+
+        /* --- Volunteering --- */
+        .vol-wrapper { max-width: 800px; width: 100%; margin: 0 auto; }
+        .vol-card { display: flex; flex-direction: column; gap: 20px; padding: 40px; }
+        .vol-header { display: flex; align-items: center; gap: 20px; }
+        .vol-icon-circle { width: 70px; height: 70px; background: linear-gradient(135deg, var(--accent), var(--primary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; color: white; }
+        .vol-content li { margin-bottom: 12px; opacity: 0.9; font-size: 16px; list-style: none; position: relative; padding-left: 25px; }
+        .vol-content li::before { content: '▹'; position: absolute; left: 0; color: var(--accent); }
+
+        /* --- Contact Portal --- */
+        .portal-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 50px; max-width: 1100px; width: 100%; }
+        .contact-info-cards { display: flex; flex-direction: column; gap: 20px; }
+        .info-item { background: var(--glass); border: 1px solid var(--glass-border); padding: 25px; border-radius: 15px; display: flex; align-items: center; gap: 20px; }
+        .info-icon { width: 50px; height: 50px; background: rgba(102, 126, 234, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 20px; }
+        .info-text label { display: block; font-size: 12px; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; font-weight: 700; }
+        .info-text p { font-weight: 600; font-size: 16px; margin: 0; }
+
+        .social-row { display: flex; gap: 15px; padding-left: 10px; margin-top: 10px; }
+        .social-btn { 
+            display: flex; align-items: center; gap: 10px; padding: 12px 20px; 
+            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); 
+            border-radius: 10px; text-decoration: none; color: var(--light); transition: 0.3s; 
         }
+        .social-btn:hover { background: var(--primary); border-color: var(--primary); transform: translateY(-3px); }
+        .social-btn i { font-size: 20px; color: var(--accent); }
+        .social-btn:hover i { color: white; }
 
-        .filter-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
+        .contact-form { display: grid; grid-template-columns: 1fr; gap: 20px; background: var(--glass); padding: 40px; border-radius: 20px; border: 1px solid var(--glass-border); }
+        .contact-form input, .contact-form textarea { width: 100%; background: rgba(255,255,255,0.03); border: 2px solid var(--glass-border); border-radius: 10px; padding: 15px; color: white; font-family: inherit; transition: 0.3s; font-size: 15px; }
+        .contact-form input:focus, .contact-form textarea:focus { border-color: var(--accent); outline: none; background: rgba(255,255,255,0.07); }
+        .send-btn { background: linear-gradient(to right, var(--accent), var(--primary)); color: white; border: none; padding: 15px 30px; border-radius: 10px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; width: 100%; font-size: 16px; margin-top: 10px; }
+        .send-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4); }
+
+        /* Scroll Top Button */
+        #scrollTopBtn {
+            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
+            background: var(--primary); color: white; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; z-index: 999; opacity: 0; pointer-events: none;
+            transition: all 0.4s ease; text-decoration: none;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.6); border: 2px solid var(--accent);
         }
+        #scrollTopBtn.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        #scrollTopBtn:hover { background: var(--accent); color: var(--darker); box-shadow: 0 0 30px var(--accent); transform: translateY(-5px); }
 
-        .filter-btn {
-            padding: 10px 25px;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 25px;
-            color: var(--light);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        .filter-btn:hover, .filter-btn.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-color: var(--primary);
-        }
-
-        .experience-timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .timeline-item {
-            margin-bottom: 50px;
-            position: relative;
-            padding-left: 50px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 15px;
-            top: 0;
-            bottom: -50px;
-            width: 2px;
-            background: linear-gradient(180deg, var(--primary), var(--accent));
-        }
-
-        .timeline-item:last-child::before {
-            display: none;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: 7px;
-            top: 5px;
-            width: 18px;
-            height: 18px;
-            background: var(--accent);
-            border-radius: 50%;
-            box-shadow: 0 0 20px var(--accent);
-            animation: pulse 2s infinite;
-        }
-
-        .experience-card h3 {
-            color: var(--accent);
-            margin-bottom: 5px;
-        }
-
-        .experience-card .company {
-            color: var(--primary);
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .experience-card ul {
-            margin-top: 15px;
-            padding-left: 20px;
-        }
-
-        .experience-card li {
-            margin-bottom: 10px;
-            opacity: 0.9;
-        }
-
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 15px;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            color: var(--light);
-            font-family: inherit;
-            transition: all 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 150px;
-        }
-
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 60px;
-            flex-wrap: wrap;
-        }
-
-        .contact-item {
-            text-align: center;
-        }
-
-        .contact-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            font-size: 24px;
-            transition: all 0.3s;
-        }
-
-        .contact-item:hover .contact-icon {
-            transform: scale(1.1) rotate(10deg);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 0 20px var(--accent);
-            }
-            50% {
-                box-shadow: 0 0 30px var(--accent);
-            }
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            background: rgba(5, 8, 16, 0.8);
-            border-top: 1px solid var(--glass-border);
-        }
-
-        @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 40px;
-            }
-
-            .section-title {
-                font-size: 36px;
-            }
-
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 992px) {
+            .portal-grid { grid-template-columns: 1fr; }
+            .cert-grid { grid-template-columns: 1fr; }
+            .skills-galaxy { grid-template-columns: 1fr; }
+            .projects-grid { grid-template-columns: 1fr; } /* Stacks projects on mobile */
+            
+            /* Mobile Nav Logic */
+            .menu-toggle { display: block; }
             nav ul {
-                gap: 15px;
-            }
-
-            .cta-buttons {
+                display: none; /* Hidden by default */
+                position: absolute;
+                top: var(--nav-height);
+                left: 0;
+                width: 100%;
+                background: rgba(10, 14, 39, 0.98);
                 flex-direction: column;
+                padding: 30px;
+                text-align: center;
+                border-bottom: 1px solid var(--glass-border);
             }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
+            nav ul.active { display: flex; } /* Display when toggled */
+        }
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 42px; }
+            .cta-secondary { flex-direction: column; width: 100%; max-width: 300px; }
+            .btn { width: 100%; }
         }
     </style>
 </head>
-<body>
+<body id="home">
     <canvas id="canvas"></canvas>
-
+    
     <nav>
         <div class="container">
             <div class="logo">TT</div>
+            <div class="menu-toggle"><i class="fas fa-bars"></i></div>
             <ul>
-                <li><a href="#hero">Home</a></li>
+                <li><a href="#home">Home</a></li>
                 <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
                 <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
                 <li><a href="#education">Education</a></li>
+                <li><a href="#certifications">Certifications</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
     </nav>
 
     <section id="hero">
+        <div class="profile-image">
+            <img src="profile-photo.jpeg" alt="Tarun Tej Gajibimkar">
+        </div>
         <div class="hero-content">
+            <span class="hello">Hello, I'm</span>
             <h1>Tarun Tej Gajibimkar</h1>
-            <div class="tagline">Data Scientist | Full Stack Developer | AI/ML Engineer </div>
-            <p>A techie with a chill vibe always exploring new innovations and ideas.<br> Adventure seeker and passionate traveller,capturing epic moments.<br>I enjoy trying different foods and making fun vlogs.<br> Creating a blend of tech, travel and fun my journey is all about crafting beautiful memories. <br> Specialized in  full stack, machine learning, deep learning and intelligent automation solutions that drive business value.</p>
+            <div class="tagline">AI-ML Developer & Software Engineer</div>
+            <p>Innovative and results-driven technology professional with expertise in Artificial Intelligence, Machine Learning, Data Science, and Full Stack Development. Passionate about leveraging intelligent automation and data-driven insights to solve complex challenges. Dedicated to continuous learning and building impactful solutions that bridge the gap between data and actionable results.</p>
+            
             <div class="cta-buttons">
                 <a href="#contact" class="btn btn-primary">Let's Connect</a>
+                <div class="cta-secondary">
+                    <a href="#projects" class="btn btn-outline"><i class="fas fa-code-branch"></i> View My Works</a>
+                    <a href="TT_resume.pdf" target="_blank" class="btn btn-outline"><i class="fas fa-file-download"></i> Download Resume</a>
+                </div>
+            </div>
+
+            <div class="hero-socials">
+                <a href="https://linkedin.com/in/tarun-tej-gajibimkar" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/tarun7explorer" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="mailto:taruntej2525@gmail.com"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
     </section>
@@ -521,119 +308,66 @@
             <h2 class="section-title">Skills Galaxy</h2>
             <div class="skills-galaxy">
                 <div class="glass-card skill-category">
-                    <h3>💻 Programming Languages</h3>
+                    <h3><i class="fas fa-laptop-code" style="color: #d1d5db;"></i> Programming Languages</h3>
                     <div class="skill-items">
-                        <div class="skill-tag">Python</div>
-                        <div class="skill-tag">Java</div>
-                        <div class="skill-tag">C</div>
-                        <div class="skill-tag">SQL</div>
+                        <div class="skill-tag">Python</div><div class="skill-tag">Java</div>
+                        <div class="skill-tag">C</div><div class="skill-tag">SQL</div>
+                        <div class="skill-tag">HTML</div><div class="skill-tag">CSS</div>
+                        <div class="skill-tag">JavaScript</div>
                     </div>
                 </div>
-
                 <div class="glass-card skill-category">
-                    <h3>🚀 Frameworks & Tools</h3>
+                    <h3><i class="fas fa-rocket" style="color: #ff5733;"></i> Frameworks & Tools</h3>
                     <div class="skill-items">
-                        <div class="skill-tag">Django</div>
-                        <div class="skill-tag">Flask</div>
-                        <div class="skill-tag">PyTorch</div>
-                        <div class="skill-tag">TensorFlow</div>
-                        <div class="skill-tag">Git/GitHub</div>
+                        <div class="skill-tag">Django</div><div class="skill-tag">Flask</div>
+                        <div class="skill-tag">FastAPI</div><div class="skill-tag">Node.js</div>
+                        <div class="skill-tag">React</div><div class="skill-tag">Spring Boot</div>
                     </div>
                 </div>
-
                 <div class="glass-card skill-category">
-                    <h3>🧠 AI & Data Science</h3>
+                    <h3><i class="fas fa-brain" style="color: #f472b6;"></i> AI & Data Science</h3>
                     <div class="skill-items">
-                        <div class="skill-tag">Machine Learning</div>
-                        <div class="skill-tag">Deep Learning</div>
-                        <div class="skill-tag">NLP (spaCy)</div>
-                        <div class="skill-tag">CNN</div>
-                        <div class="skill-tag">Beautiful Soup</div>
+                        <div class="skill-tag">Machine Learning</div><div class="skill-tag">Deep Learning</div>
+                        <div class="skill-tag">NLP (spaCy)</div><div class="skill-tag">TensorFlow</div>
+                        <div class="skill-tag">AI Automation</div><div class="skill-tag">RAG</div>
+                        <div class="skill-tag">Gen AI</div>
                     </div>
                 </div>
-
                 <div class="glass-card skill-category">
-                    <h3>📊 Data Analysis</h3>
+                    <h3><i class="fas fa-chart-bar" style="color: #34d399;"></i> Data Analysis</h3>
                     <div class="skill-items">
-                        <div class="skill-tag">Pandas</div>
-                        <div class="skill-tag">NumPy</div>
-                        <div class="skill-tag">Power BI</div>
-                        <div class="skill-tag">Excel</div>
-                        <div class="skill-tag">Data Visualization</div>
+                        <div class="skill-tag">Pandas</div><div class="skill-tag">NumPy</div>
+                        <div class="skill-tag">Power BI</div><div class="skill-tag">Tableau</div>
+                        <div class="skill-tag">MS Excel</div><div class="skill-tag">EDA</div>
                     </div>
                 </div>
-
                 <div class="glass-card skill-category">
-                    <h3>☁️ Cloud & DevOps</h3>
+                    <h3><i class="fas fa-tools" style="color: #60a5fa;"></i> Tools</h3>
                     <div class="skill-items">
-                        <div class="skill-tag">AWS Cloud</div>
-                        <div class="skill-tag">CI/CD Pipelines</div>
-                        <div class="skill-tag">Linux</div>
+                        <div class="skill-tag">VS Code</div><div class="skill-tag">Jupyter Notebook</div>
+                        <div class="skill-tag">Git</div><div class="skill-tag">Postman</div>
                     </div>
                 </div>
-
                 <div class="glass-card skill-category">
-                    <h3>🎓 Core Concepts</h3>
+                    <h3><i class="fas fa-cloud" style="color: #ffffff;"></i> Cloud & DevOps</h3>
                     <div class="skill-items">
-                        <div class="skill-tag">DSA</div>
-                        <div class="skill-tag">DBMS</div>
-                        <div class="skill-tag">OOP</div>
-                        <div class="skill-tag">Computer Networks</div>
+                        <div class="skill-tag">AWS</div><div class="skill-tag">Docker</div>
+                        <div class="skill-tag">CI/CD</div><div class="skill-tag">Linux</div>
+                    </div>
+                </div>
+                <div class="glass-card skill-category">
+                    <h3><i class="fas fa-graduation-cap" style="color: #fbbf24;"></i> Core Concepts</h3>
+                    <div class="skill-items">
+                        <div class="skill-tag">DSA</div><div class="skill-tag">DBMS</div>
+                        <div class="skill-tag">OOP</div><div class="skill-tag">Computer Networks</div>
                         <div class="skill-tag">Operating Systems</div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects">
-        <div class="container">
-            <h2 class="section-title">Project Gallery</h2>
-            
-            <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all">All Projects</button>
-                <button class="filter-btn" data-filter="ai">AI/ML</button>
-                <button class="filter-btn" data-filter="web">Web Dev</button>
-                <button class="filter-btn" data-filter="iot">IoT</button>
-            </div>
-
-            <div class="projects-grid">
-                <div class="glass-card project-card" data-category="ai web">
-                    <h3>🎯 Resume Parser & Skill Matcher</h3>
-                    <p>AI-powered recruitment automation system that extracts candidate data from resumes and matches them with job descriptions using NLP and similarity scoring algorithms.</p>
-                    <p><strong>Impact:</strong> Increased recruiter efficiency by 15% through automated screening and intelligent matching.</p>
-                    <div class="tech-stack">
-                        <span class="tech-badge">Python</span>
-                        <span class="tech-badge">spaCy</span>
-                        <span class="tech-badge">NLP</span>
-                        <span class="tech-badge">SQL</span>
-                        <span class="tech-badge">PDF Processing</span>
-                    </div>
-                </div>
-
-                <div class="glass-card project-card" data-category="ai">
-                    <h3>🔍 Fake Media Detection System</h3>
-                    <p>Multi-modal deep learning framework combining CNNs for image manipulation detection and ensemble ML models (Logistic Regression + Random Forest) for text-based misinformation identification.</p>
-                    <p><strong>Accuracy:</strong> 87.7% overall system performance on standard datasets.</p>
-                    <div class="tech-stack">
-                        <span class="tech-badge">CNN</span>
-                        <span class="tech-badge">PyTorch</span>
-                        <span class="tech-badge">Random Forest</span>
-                        <span class="tech-badge">Deep Learning</span>
-                        <span class="tech-badge">Digital Forensics</span>
-                    </div>
-                </div>
-
-                <div class="glass-card project-card" data-category="iot">
-                    <h3>🌡️ Smart Air Control Monitoring</h3>
-                    <p>Real-time atmospheric monitoring system using Arduino microcontroller with MQ-2/MQ-5 sensors for gas detection. Features wireless data transmission via Wi-Fi and intelligent threshold-based alerting.</p>
-                    <p><strong>Application:</strong> Environmental safety monitoring and hazard prevention.</p>
-                    <div class="tech-stack">
-                        <span class="tech-badge">Arduino</span>
-                        <span class="tech-badge">IoT</span>
-                        <span class="tech-badge">Sensors</span>
-                        <span class="tech-badge">Wi-Fi Module</span>
-                        <span class="tech-badge">Web Dashboard</span>
+                <div class="glass-card skill-category">
+                    <h3><i class="fas fa-user-check" style="color: #2dd4bf;"></i> Soft Skills</h3>
+                    <div class="skill-items">
+                        <div class="skill-tag">Leadership</div><div class="skill-tag">Communication</div>
+                        <div class="skill-tag">Problem Solving</div><div class="skill-tag">Teamwork</div>
                     </div>
                 </div>
             </div>
@@ -642,45 +376,168 @@
 
     <section id="experience">
         <div class="container">
-            <h2 class="section-title">Experience Timeline</h2>
-            
-            <div class="experience-timeline">
+            <h2 class="section-title">Professional Experience</h2>
+            <div class="timeline-section">
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
+                    <div class="glass-card experience-card">
+                        <h3>Finance Analyst Intern</h3>
+                        <span class="company">MOM Pharmacy</span>
+                        <span class="date">Oct 2025 - Dec 2025</span>
+                        <ul>
+                            <li>Optimized revenue tracking and operational efficiency by developing automated financial models and KPI dashboards in Excel and SQL.</li>
+                            <li>Resulted in a 15% reduction in reporting time and identified key cost-saving measures that lowered operational expenses.</li>
+                            <li>Spearheaded market expansion strategies through comprehensive competitor benchmarking and sales data analysis.</li>
+                            <li>Delivered actionable insights that helped management identify three new growth opportunities.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="glass-card experience-card">
+                        <h3>Frontend Web Developer</h3>
+                        <span class="company">Edunet Foundation</span>
+                        <span class="date">Aug 2025 - Sep 2025</span>
+                        <ul>
+                            <li>Built a complete Food Recipe Web Application with mobile-friendly responsive design.</li>
+                            <li>Delivered and hosted a fully functional front-end solution using GitHub Pages.</li>
+                            <li>Solidified a strong, conceptual understanding of core frontend technologies including semantic HTML, CSS and JavaScript.</li>
+                            <li>Designed intuitive user interfaces with advanced search and filtering capabilities.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="glass-card experience-card">
+                        <h3>AI & ML Intern</h3>
+                        <span class="company">Edunet Foundation</span>
+                        <span class="date">Jun 2025 - Jul 2025</span>
+                        <ul>
+                            <li>Developed and optimized ML models using Python and Scikit-Learn, improving prediction accuracy through rigorous data preprocessing.</li>
+                            <li>Built Fake News Detection System achieving 92% accuracy using LSTM model with hybrid deep learning approach.</li>
+                            <li>Collaborated on end-to-end AI solutions from exploratory data analysis (EDA) to model deployment.</li>
+                            <li>Performed feature engineering and hyperparameter tuning to enhance model performance.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item">
                     <div class="glass-card experience-card">
                         <h3>Data Analyst Intern</h3>
-                        <div class="company">MetaSketch | Apr 2025 - May 2025</div>
+                        <span class="company">MetaSketch</span>
+                        <span class="date">Oct 2023 - Nov 2024</span>
                         <ul>
-                            <li>Transformed raw data into actionable insights using Excel, SQL, Python (Pandas, NumPy), and Beautiful Soup for web scraping</li>
-                            <li>Designed interactive Power BI dashboards to visualize trends and deliver strategic, data-backed recommendations</li>
-                            <li>Enhanced client decision-making through comprehensive data analysis and compelling visualizations</li>
+                            <li>Processed and automated ETL pipelines using Python and SQL to process large-scale datasets.</li>
+                            <li>Developed interactive Power BI dashboards to visualize key trends, significantly reducing manual reporting time.</li>
+                            <li>Utilized Excel, Pandas, NumPy, and Beautiful Soup for data transformation and web scraping.</li>
+                            <li>Enabled data-driven strategic decision-making through comprehensive analysis and reporting.</li>
                         </ul>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="glass-card experience-card">
-                        <h3>Python Development Intern</h3>
-                        <div class="company">Cognifyz Technologies | Oct 2024 - Nov 2024</div>
-                        <ul>
-                            <li>Developed robust web scraping and task automation solutions using Python, Django, and Flask</li>
-                            <li>Achieved 15% increase in productivity through automated workflows and optimized backend processes</li>
-                            <li>Leveraged data visualization libraries to present actionable insights for data-driven decision-making</li>
-                        </ul>
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="ai">AI/ML</button>
+                <button class="filter-btn" data-filter="web">Web Dev</button>
+                <button class="filter-btn" data-filter="iot">IoT</button>
+            </div>
+            <div class="projects-grid">
+                
+                <div class="glass-card project-card" data-category="ai">
+                    <div class="project-header">
+                        <h3>🔍 Fake News/Text Detector</h3>
+                        <a href="https://huggingface.co/spaces/tarun2525tej/Detective_on_Duty" class="live-link" target="_blank" title="Live View"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                    <p>Engineered sophisticated fake news detection web application using LSTM deep learning with 95% accuracy.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">LSTM</span>
+                        <span class="tech-badge">Hugging Face</span>
+                        <span class="tech-badge">Flask</span>
                     </div>
                 </div>
 
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="glass-card experience-card">
-                        <h3>Associate Volunteer</h3>
-                        <div class="company">Volunteer For India (VIF) | Aug 2022 - Present</div>
-                        <ul>
-                            <li>Led a team of 12 members supporting program coordinators in event planning and outreach initiatives</li>
-                            <li>Contributed to addressing local social issues through effective community engagement</li>
-                            <li>Demonstrated leadership and collaborative problem-solving skills</li>
-                        </ul>
+                <div class="glass-card project-card" data-category="web">
+                    <div class="project-header">
+                        <h3>🧩 Zip-Line Game</h3>
+                        <a href="https://zip-line-game-by-tarun.netlify.app/" class="live-link" target="_blank" title="Live View"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                    <p>Designed a fully responsive logic puzzle game using Vanilla JavaScript and SVG rendering. Features a custom DFS backtracking algorithm for a real-time smart hint system.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">JavaScript</span>
+                        <span class="tech-badge">Data Structures & Algorithms</span>
+                        <span class="tech-badge">HTML5</span>
+                        <span class="tech-badge">CSS3</span>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card" data-category="ai">
+                    <div class="project-header">
+                        <h3>🎯 AI Resume Parser</h3>
+                        <a href="https://resume-matcher-by-tarun-21.lovable.app/" class="live-link" target="_blank" title="Live View"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                    <p>Automated recruitment parsing using spaCy NLP to match candidates with job descriptions effectively.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Python</span><span class="tech-badge">spaCy</span>
+                        <span class="tech-badge">NLP</span><span class="tech-badge">SQL</span>
+                        <span class="tech-badge">Filtering Keywords</span>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card" data-category="ai web">
+                    <div class="project-header">
+                        <h3>✏️ Pencil Sketch Maker</h3>
+                        <a href="https://sketchpy-dcjj9gxgztlfx5tr5lmwrv.streamlit.app/" class="live-link" target="_blank" title="Live View"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                    <p>Interactive web application using Python and Streamlit to convert digital photos into realistic pencil sketches with OpenCV image processing.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Python</span><span class="tech-badge">OpenCV</span><span class="tech-badge">Streamlit</span>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card" data-category="web">
+                    <div class="project-header">
+                        <h3>📸 Hyderabad Snapshot</h3>
+                        <a href="https://hyderabad-explorer.vercel.app/" class="live-link" target="_blank" title="Live View"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                    <p>Interactive web application showcasing cultural heritage and architectural landmarks of Hyderabad with responsive design and optimized image galleries.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">HTML5</span><span class="tech-badge">CSS3</span><span class="tech-badge">JavaScript</span><span class="tech-badge">React.js</span>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card" data-category="web">
+                    <div class="project-header">
+                        <h3>🍽️ Food World Recipe Finder</h3>
+                        <a href="https://tarun7explorer.github.io/food_receipe_finder/" class="live-link" target="_blank" title="Live View"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                    <p>Web application with dynamic search and categorized browsing for Indian Dishes, Sweets & Desserts with cooking instructions.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">HTML5</span><span class="tech-badge">CSS3</span><span class="tech-badge">JavaScript</span><span class="tech-badge">SEO</span>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card" data-category="web">
+                    <div class="project-header">
+                        <h3>⚙️ Distributed Task Processing Platform</h3>
+                        <a href="https://github.com/tarun7explorer" class="live-link" target="_blank" title="Live View"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                    <p>A distributed platform enabling parallel task execution across worker microservices with fault-tolerant execution and real-time monitoring.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Java</span><span class="tech-badge">Spring Boot</span><span class="tech-badge">Docker</span><span class="tech-badge">PostgreSQL</span>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card" data-category="iot">
+                    <div class="project-header">
+                        <h3>🌡️ Smart Air Control Monitoring System</h3>
+                        <a href="https://github.com/tarun7explorer" class="live-link" target="_blank" title="Live View"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                    <p>Real-time atmospheric gas monitoring system using Arduino with MQ-5 sensors to detect smoke, LPG, and natural gas with alerts.</p>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Python</span><span class="tech-badge">Arduino</span><span class="tech-badge">MQ-5 Sensors</span><span class="tech-badge">Wi-Fi Module</span><span class="tech-badge">EC2 Server</span>
                     </div>
                 </div>
             </div>
@@ -690,15 +547,13 @@
     <section id="education">
         <div class="container">
             <h2 class="section-title">Education Timeline</h2>
-            
-            <div class="experience-timeline">
+            <div class="timeline-section">
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="glass-card experience-card">
+                    <div class="glass-card education-card">
                         <h3>BTech in Electronics and Communication Engineering</h3>
-                        <div class="company">Vardhaman College of Engineering | 2022 - 2026</div>
-                        <p style="margin-top: 10px;"><strong>CGPA:</strong> 8.4/10</p>
-                        <p style="margin-top: 10px;"><strong>Minor Degree:</strong> Data Science | CGPA: 8.8/10</p>
+                        <span class="company">Vardhaman College of Engineering | 2022 - 2026</span>
+                        <p style="margin-top: 5px;"><strong>CGPA:</strong> 8.4/10</p>
+                        <span class="minor-degree">Minor Degree: Data Science | CGPA: 8.8/10</span>
                         <ul>
                             <li>Specialized in Data Science with focus on Machine Learning, Deep Learning, and AI applications</li>
                             <li>Key coursework: Data Structures & Algorithms, DBMS, Computer Networks, Operating Systems, OOP, Compiler Design</li>
@@ -706,26 +561,22 @@
                         </ul>
                     </div>
                 </div>
-
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="glass-card experience-card">
+                    <div class="glass-card education-card">
                         <h3>Intermediate (Class 11-12)</h3>
-                        <div class="company">Narayana Junior College</div>
-                        <p style="margin-top: 10px;"><strong>Percentage:</strong> 89%</p>
+                        <span class="company">Narayana Junior College</span>
+                        <span class="date">May 2019 - March 2021 | Percentage: 89%</span>
                         <ul>
                             <li>Strong foundation in Mathematics, Physics, and Chemistry</li>
                             <li>Developed analytical and problem-solving skills</li>
                         </ul>
                     </div>
                 </div>
-
                 <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="glass-card experience-card">
+                    <div class="glass-card education-card">
                         <h3>Secondary Education (Class 10)</h3>
-                        <div class="company">St. Joseph School</div>
-                        <p style="margin-top: 10px;"><strong>Percentage:</strong> 86%</p>
+                        <span class="company">St. Joseph School [ICSE]</span>
+                        <span class="date">June 2018 - March 2019 | Percentage: 86%</span>
                         <ul>
                             <li>Built strong academic fundamentals across all subjects</li>
                             <li>Participated in various co-curricular activities</li>
@@ -736,157 +587,216 @@
         </div>
     </section>
 
-    <section id="contact">
+    <section id="certifications">
         <div class="container">
-            <h2 class="section-title">Let's Connect</h2>
-
-            <div class="contact-info">
-                <div class="contact-item">
-                    <a href="mailto:taruntej2525@gmail.com" style="text-decoration: none; color: inherit;">
-                        <div class="contact-icon">📧</div>
-                        <div>taruntej2525@gmail.com</div>
-                    </a>
+            <h2 class="section-title">Certifications</h2>
+            <div class="cert-grid">
+                <div class="glass-card cert-card">
+                    <div class="card-icon"><i class="fas fa-certificate"></i></div>
+                    <div class="card-content">
+                        <h3>Oracle Certified AI Foundations Associate</h3>
+                        <span class="issuer">Oracle</span>
+                    </div>
                 </div>
-                
-                <div class="contact-item">
-                    <a href="tel:+917989149782" style="text-decoration: none; color: inherit;">
-                        <div class="contact-icon">📱</div>
-                        <div>+91 7989149782</div>
-                    </a>
+                <div class="glass-card cert-card">
+                    <div class="card-icon"><i class="fas fa-award"></i></div>
+                    <div class="card-content">
+                        <h3>Python for Data Science</h3>
+                        <span class="issuer">NPTEL (IIT Madras) - Elite + Silver Medal</span>
+                    </div>
                 </div>
-                
-                <div class="contact-item">
-                    <a href="https://linkedin.com/in/tarun-tej-gajibimkar" target="_blank" style="text-decoration: none; color: inherit;">
-                        <div class="contact-icon">💼</div>
-                        <div>LinkedIn Profile</div>
-                    </a>
+                <div class="glass-card cert-card">
+                    <div class="card-icon"><i class="fas fa-laptop-code"></i></div>
+                    <div class="card-content">
+                        <h3>Data Science Boot Camp</h3>
+                        <span class="issuer">GeeksforGeeks</span>
+                    </div>
                 </div>
-                
-                <div class="contact-item">
-                    <a href="https://github.com/taruntej" target="_blank" style="text-decoration: none; color: inherit;">
-                        <div class="contact-icon">💻</div>
-                        <div>GitHub Profile</div>
-                    </a>
+                <div class="glass-card cert-card">
+                    <div class="card-icon"><i class="fas fa-user-graduate"></i></div>
+                    <div class="card-content">
+                        <h3>Developing Soft Skills and Personality</h3>
+                        <span class="issuer">NPTEL (IIT Kanpur) - Elite + Silver Medal</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer>
-        <p>Curious by nature, driven by logic, and inspired by impact.<br>
-         Engineered with passion and powered by innovation.</p>
-    </footer>
+    <section id="volunteering">
+        <div class="container">
+            <h2 class="section-title">Volunteering</h2>
+            <div class="vol-wrapper">
+                <div class="glass-card vol-card">
+                    <div class="vol-header">
+                        <div class="vol-icon-circle"><i class="fas fa-hands-helping"></i></div>
+                        <div>
+                            <h3 style="color:var(--accent); font-size:22px; margin:0;">Associate Volunteer</h3>
+                            <span style="color:var(--primary); font-weight:600;">Volunteer For India (VIF)</span>
+                            <div style="font-size:13px; opacity:0.7;">Aug 2022 - Present</div>
+                        </div>
+                    </div>
+                    <ul class="vol-content">
+                        <li>Lead a cross-functional team of 12 volunteers coordinating event planning and community outreach</li>
+                        <li>Coordinated social impact initiatives across 15+ programs annually</li>
+                        <li>Spearheaded grassroots campaigns addressing local education and healthcare challenges</li>
+                        <li>Engaged 50+ community members through workshops and awareness drives</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Portal</h2>
+            <p style="text-align: center; margin-bottom: 50px; opacity: 0.8; max-width: 650px; margin-left: auto; margin-right: auto; font-size: 18px; line-height: 1.6;">
+                I'm currently looking for new opportunities. Whether you have a question or just<br>
+                want to say hi, I'll try my best to get back to you!
+            </p>
+
+            <div class="portal-grid">
+                <div class="contact-info-cards">
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="info-text">
+                            <label>Email</label>
+                            <p>taruntej2525@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
+                        <div class="info-text">
+                            <label>Phone</label>
+                            <p>+91-7989149782</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="info-text">
+                            <label>Location</label>
+                            <p>Hyderabad, Telangana, India</p>
+                        </div>
+                    </div>
+
+                    <div class="social-row">
+                        <a href="https://linkedin.com/in/tarun-tej-gajibimkar" target="_blank" class="social-btn">
+                            <i class="fab fa-linkedin"></i> <span>LinkedIn</span>
+                        </a>
+                        <a href="https://github.com/tarun7explorer" target="_blank" class="social-btn">
+                            <i class="fab fa-github"></i> <span>GitHub</span>
+                        </a>
+                    </div>
+                </div>
+
+                <form class="contact-form" action="mailto:taruntej2525@gmail.com" method="post" enctype="text/plain">
+                    <h3 style="color: var(--accent); margin-bottom: 15px; font-size: 24px;">Send me a Message</h3>
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Message" rows="6" required></textarea>
+                    <button type="submit" class="send-btn">
+                        Send Message <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <a href="#home" id="scrollTopBtn"><i class="fas fa-arrow-up"></i></a>
 
     <script>
-        // Neural Network Canvas Animation
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        // Hamburger Menu Logic
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navUl = document.querySelector('nav ul');
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.size = Math.random() * 2 + 1;
-            }
-
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-            }
-
-            draw() {
-                ctx.fillStyle = 'rgba(102, 126, 234, 0.6)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        const particles = [];
-        for (let i = 0; i < 80; i++) {
-            particles.push(new Particle());
-        }
-
-        function connectParticles() {
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < 150) {
-                        ctx.strokeStyle = `rgba(0, 212, 255, ${1 - distance / 150})`;
-                        ctx.lineWidth = 1;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            particles.forEach(particle => {
-                particle.update();
-                particle.draw();
-            });
-
-            connectParticles();
-            requestAnimationFrame(animate);
-        }
-
-        animate();
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        menuToggle.addEventListener('click', () => {
+            navUl.classList.toggle('active');
         });
 
-        // Project Filter
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const projectCards = document.querySelectorAll('.project-card');
-
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                const filter = btn.getAttribute('data-filter');
-
-                projectCards.forEach(card => {
-                    if (filter === 'all') {
-                        card.style.display = 'block';
-                    } else {
-                        const categories = card.getAttribute('data-category');
-                        if (categories.includes(filter)) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    }
-                });
+        // Close menu when a link is clicked
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                navUl.classList.remove('active');
             });
         });
 
-        // Smooth Scroll
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    window.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
                 }
             });
         });
-  
+
+        // Filter projects
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.getAttribute('data-filter');
+                projectCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category').includes(filter)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Smart Nav & Scroll Top
+        let lastScrollY = window.scrollY;
+        const nav = document.querySelector('nav');
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                nav.classList.add('nav-hidden');
+            } else {
+                nav.classList.remove('nav-hidden');
+            }
+            if (currentScrollY > 500) scrollTopBtn.classList.add('show');
+            else scrollTopBtn.classList.remove('show');
+            lastScrollY = currentScrollY;
+        });
+
+        // Particles
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < 70; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+                    size: Math.random() * 2.5,
+                    speedX: (Math.random() - 0.5) * 0.4, speedY: (Math.random() - 0.5) * 0.4
+                });
+            }
+        }
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'rgba(102, 126, 234, 0.3)';
+            particles.forEach(p => {
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+                p.x += p.speedX; p.y += p.speedY;
+                if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+            });
+            requestAnimationFrame(draw);
+        }
+        window.addEventListener('resize', init);
+        init();
+        draw();
+    </script>
+</body>
+</html>
